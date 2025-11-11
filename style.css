@@ -1,9 +1,30 @@
+@font-face {
+    font-family: "helvetica-now";
+    src: url("Fonts/HelveticaNowText-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "montefiore";
+    src: url("Fonts/montefiore-condensed-light.woff.ttf") format("truetype");
+}
+
+:root {
+    /* COLORS */
+    --darkBlue: #2B3A55;
+    --green: #2AA784;
+    --pink: #F6B2BB;
+    /* FONTS */
+    --helvetica: "helvetica-now";
+    --montefiore: "montefiore"
+}
+
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     background-color: #2AA784;
-    font-family: Helvetica, sans-serif;
+    font-family: var(--helvetica);
 }
 
 body {
@@ -32,6 +53,62 @@ body {
     flex-direction: column;
 }
 
+.montefiore {
+    font-family: var(--montefiore);
+}
+
+.logo_text {
+    color: white;
+    font-size: 60px;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.logo {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+}
+
+.logo_img {
+    width: 100%;
+}
+
+.img_container {
+    width: 50%;
+}
+
+.img {
+    height:100%;
+    width:100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.QR {
+    background-image: url('/images/Scanna\ QR-koden\ för\ att\ lämna\ ditt\ bidrag!1.png');
+}
+
+.MH {
+    background-image: url('/images/MH\ Sticker\ Vi\ stödjer\ \ -\ original\ \(1586150\).png');
+}
+
+.logo_qr {
+    height: 100%;
+    display: flex;
+    gap: 15px;
+}
+
+.muskihjalpen_img {
+    width: 100%;
+}
+
+.QR_code {
+    width: 100%;
+}
+
 .last_five_container {
     height: 50%;
 }
@@ -40,10 +117,11 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 80%;
 }
 
 .donation {
-    padding: 10px 20px;
+    padding: 20px 30px;
     display: flex;
     gap: 10px;
     border-radius: 15px;
@@ -74,29 +152,37 @@ body {
 
 .bar_container {
     display: flex;
+    justify-content: center;
     height: 80%;
-    width: 30%;
+    width: 100%;
 }
 
 .steps {
-    width: 50%;
+    width: 25%;
+}
+
+.goal {
+    color: white;
+    font-size: 40px;
 }
 
 .bar_edge {
     display: flex;
-    border: solid black;
-    width: 60%;
+    border: solid var(--darkBlue);
+    width: 25%;
     flex-direction: column-reverse;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    border-radius: 10px;
 }
 
 .bar {
     background-color: #F6B2BB;
+    border-radius: 6px;
     /* height: 50%; */
 }
 
 .current {
-    width: 50%;
+    width: 25%;
     display: flex;
     flex-direction: column-reverse;
 }
@@ -107,12 +193,13 @@ body {
 }
 
 .current_number {
+    color: white;
     font-weight: bold;
     /* padding-right: 10px; */
 }
 
 #indicator {
-    border-top: solid black;
+    border-top: solid var(--darkBlue);
 }
 
 progress {
