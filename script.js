@@ -24,7 +24,7 @@ async function loadData() {
     console.log(percentage)
     document.getElementById("bar").style.height = percentage + "%";
     document.getElementById("indicator").style.height = percentage + "%";
-    
+
     var formatted = totalprice.amount.toLocaleString("sv-SE", {
         style: "currency",
         currency: "SEK",
@@ -36,6 +36,7 @@ async function loadData() {
 
     const box = document.getElementById("box");
     const text = document.getElementById("amount");
+    const goal = document.getElementById("goal");
 
     let size = 100; // start big
     text.style.fontSize = size + "px";
@@ -45,6 +46,7 @@ async function loadData() {
         console.log(size)
         size--;
         text.style.fontSize = size + "px";
+        goal.style.fontSize = size + "px";
     }
     // bar.style.height = percentage + "%";
 }
