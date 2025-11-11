@@ -1,0 +1,124 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #2AA784;
+    font-family: Helvetica, sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.last_five_container {
+    height: 50%;
+}
+
+.last_five {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.donation {
+    padding: 10px 20px;
+    display: flex;
+    gap: 10px;
+    border-radius: 15px;
+    font-size: 20px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.donation > *, .donation {
+    background-color: #2B3A55;
+}
+
+.donation_text {
+    color: white;
+    font-weight: bold;
+}
+
+.QR_container {
+    height: 50%;
+}
+
+.right {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.bar_container {
+    display: flex;
+    height: 80%;
+    width: 30%;
+}
+
+.steps {
+    width: 50%;
+}
+
+.bar_edge {
+    display: flex;
+    border: solid black;
+    width: 60%;
+    flex-direction: column-reverse;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.bar {
+    background-color: #F6B2BB;
+    /* height: 50%; */
+}
+
+.current {
+    width: 50%;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+#box {
+    order: 1;
+    width: 95%;
+}
+
+.current_number {
+    font-weight: bold;
+    /* padding-right: 10px; */
+}
+
+#indicator {
+    border-top: solid black;
+}
+
+progress {
+    width: 75%;
+    height: 108px;
+    transform: rotate(270deg);
+    border-radius: 5px;
+    margin: 0;
+}
