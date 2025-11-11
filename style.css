@@ -88,11 +88,11 @@ body {
 }
 
 .QR {
-    background-image: url('/images/Scanna\ QR-koden\ för\ att\ lämna\ ditt\ bidrag!1.png');
+    background-image: url('images/Scanna\ QR-koden\ för\ att\ lämna\ ditt\ bidrag!1.png');
 }
 
 .MH {
-    background-image: url('/images/MH\ Sticker\ Vi\ stödjer\ \ -\ original\ \(1586150\).png');
+    background-image: url('images/MH\ Sticker\ Vi\ stödjer\ \ -\ original\ \(1586150\).png');
 }
 
 .logo_qr {
