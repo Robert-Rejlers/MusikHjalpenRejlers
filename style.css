@@ -1,11 +1,11 @@
 @font-face {
     font-family: "helvetica-now";
-    src: url("Fonts/HelveticaNowText-Medium.ttf") format("truetype");
+    src: url("fonts/HelveticaNowText-Medium.ttf") format("truetype");
 }
 
 @font-face {
     font-family: "montefiore";
-    src: url("Fonts/montefiore-condensed-light.woff.ttf") format("truetype");
+    src: url("fonts/montefiore-condensed-light.woff.ttf") format("truetype");
 }
 
 :root {
