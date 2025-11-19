@@ -1,6 +1,6 @@
 // Run when page has finished loading
 window.onload = function () {
-  console.log("load");
+  // console.log("load");
   loadData();
 };
 
@@ -16,7 +16,7 @@ function loadData() {
     var lastfive = results[2];
 
     var lastfiveContainer = document.getElementsByClassName("last_five")[0];
-    console.log(lastfive);
+    // console.log(lastfive);
 
     if (lastfive && lastfive.length && lastfiveContainer) {
       for (var i = 0; i < lastfive.length; i++) {
@@ -34,7 +34,7 @@ function loadData() {
     }
 
     var percentage = (totalprice.amount / 200000) * 100;
-    console.log(percentage);
+    // console.log(percentage);
 
     var bar = document.getElementById("bar");
     var indicator = document.getElementById("indicator");
@@ -42,7 +42,7 @@ function loadData() {
     if (indicator) indicator.style.height = percentage + "%";
 
     var formatted = formatSEK(totalprice.amount);
-    console.log(formatted);
+    // console.log(formatted);
 
     var amountEl = document.getElementById("amount");
     if (amountEl) {
@@ -127,14 +127,14 @@ function simpleFetchJson(url) {
 
   return fetch(url, { cache: "no-store" })
     .then(function (res) {
-      console.log(res);
+      // console.log(res);
       if (!res.ok) {
         throw new Error("HTTP " + res.status);
       }
       return res.json();
     })
     .then(function (data) {
-      console.log(data);
+      // console.log(data);
       return data;
     })
     .catch(function (err) {
