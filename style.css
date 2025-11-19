@@ -76,8 +76,8 @@ body {
 }
 
 .img_container {
-    /* width: 50%; */
-    height: 50%;
+    width: 50%;
+    /* height: 50%; */
 }
 
 .img {
@@ -98,7 +98,6 @@ body {
 
 .logo_qr {
     display: flex;
-    flex-direction: column;
     height: 100%;
     gap: 15px;
 }
@@ -118,7 +117,7 @@ body {
 .last_five {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     width: 80%;
 }
 
@@ -127,7 +126,7 @@ body {
     display: flex;
     gap: 10px;
     border-radius: 15px;
-    font-size: 20px;
+    font-size: 30px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
