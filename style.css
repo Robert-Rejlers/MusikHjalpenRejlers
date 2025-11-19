@@ -137,7 +137,7 @@ body {
 
 .donation_text {
     color: white;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 .QR_container {

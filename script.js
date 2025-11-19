@@ -1,125 +1,144 @@
-window.addEventListener("load", () => {
+// Run when page has finished loading
+window.onload = function () {
   console.log("load");
-  loadData()
-});
+  loadData();
+};
 
-async function loadData() {
-    var totalprice = await loadtotalprice()
-    var totaldonations = await loadtotaldonations()
-    var lastfive = await loadlastfive()
+function loadData() {
+  // run the three requests in parallel
+  Promise.all([
+    loadTotalPrice(),
+    loadTotalDonations(),
+    loadLastFive()
+  ]).then(function (results) {
+    var totalprice = results[0];
+    var totaldonations = results[1]; // not used right now, but kept
+    var lastfive = results[2];
 
-    var lastfiveContainer = document.getElementsByClassName("last_five")[0]
-    console.log(lastfive)
-    lastfive.forEach(donation => {
-        const div = document.createElement("div");
+    var lastfiveContainer = document.getElementsByClassName("last_five")[0];
+    console.log(lastfive);
+
+    if (lastfive && lastfive.length && lastfiveContainer) {
+      for (var i = 0; i < lastfive.length; i++) {
+        var donation = lastfive[i];
+        var div = document.createElement("div");
         div.className = "donation";
-
-        div.innerHTML = `
-            <p class="donation_name donation_text">${donation.name} gav ${donation.amount}</p>
-        `;
+        div.innerHTML =
+          '<p class="donation_name donation_text">' +
+          donation.name +
+          " gav " +
+          donation.amount +
+          "</p>";
         lastfiveContainer.appendChild(div);
-    });
+      }
+    }
 
-    var percentage = (totalprice.amount / 200000) * 100
-    console.log(percentage)
-    document.getElementById("bar").style.height = percentage + "%";
-    document.getElementById("indicator").style.height = percentage + "%";
+    var percentage = (totalprice.amount / 200000) * 100;
+    console.log(percentage);
 
-    var formatted = totalprice.amount.toLocaleString("sv-SE", {
-        style: "currency",
-        currency: "SEK",
-        maximumFractionDigits: 0, // optional – removes decimals
-    });
-    formatted += ""
-    console.log(formatted)
-    document.getElementById("amount").innerText = formatted + ""
+    var bar = document.getElementById("bar");
+    var indicator = document.getElementById("indicator");
+    if (bar) bar.style.height = percentage + "%";
+    if (indicator) indicator.style.height = percentage + "%";
 
-    const box = document.getElementById("box");
-    const text = document.getElementById("amount");
-    const goal = document.getElementById("goal");
+    var formatted = formatSEK(totalprice.amount);
+    console.log(formatted);
 
-    let size = 100; // start big
-    text.style.fontSize = size + "px";
+    var amountEl = document.getElementById("amount");
+    if (amountEl) {
+      amountEl.innerText = formatted + "";
+    }
 
-    // shrink text until it fits
-    while (text.scrollWidth > box.clientWidth && size > 0) {
-        console.log(size)
+    var box = document.getElementById("box");
+    var text = amountEl;
+    var goal = document.getElementById("goal");
+
+    if (box && text && goal) {
+      var size = 100; // start big
+      text.style.fontSize = size + "px";
+      goal.style.fontSize = size + "px";
+
+      // shrink text until it fits
+      while (text.scrollWidth > box.clientWidth && size > 0) {
+        console.log(size);
         size--;
         text.style.fontSize = size + "px";
         goal.style.fontSize = size + "px";
+      }
     }
-    // bar.style.height = percentage + "%";
+  }).catch(function (err) {
+    console.error(err);
+  });
 }
 
-async function loadtotaldonations() {
-    const SOURCE =
-      "https://musikhjalpen-franceska.herokuapp.com/server/fundraisers/donations/1miEB4p0tI1WQJgRWZEEb9/number-of-donations";
-    const PROXY = "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(SOURCE); //rätt snabb
+function formatSEK(n) {
+  n = Number(n || 0);
+  // Try proper currency formatting if available
+  try {
+    return n.toLocaleString("sv-SE", {
+      style: "currency",
+      currency: "SEK",
+      maximumFractionDigits: 0
+    });
+  } catch (e) {
+    // Fallback for old browsers without Intl
+    return n + " kr";
+  }
+}
 
-    try {
-      const res = await fetch(PROXY, { cache: "no-store" });
-      console.log(res)
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json(); // upstream JSON is passed through
-      console.log(data)
+/* --------- DATA LOADERS --------- */
+
+function loadTotalDonations() {
+  var SOURCE =
+    "https://musikhjalpen-franceska.herokuapp.com/server/fundraisers/donations/1miEB4p0tI1WQJgRWZEEb9/number-of-donations";
+  var PROXY =
+    "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(SOURCE);
+
+  return simpleFetchJson(PROXY);
+}
+
+function loadLastFive() {
+  var SOURCE =
+    "https://musikhjalpen-franceska.herokuapp.com/server/fundraisers/donations/1miEB4p0tI1WQJgRWZEEb9/0";
+  var PROXY =
+    "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(SOURCE);
+
+  return simpleFetchJson(PROXY);
+}
+
+function loadTotalPrice() {
+  var SOURCE =
+    "https://musikhjalpen-franceska.herokuapp.com/server/fundraisers/1miEB4p0tI1WQJgRWZEEb9?fields[]=amount&fields[]=prev_amount";
+  var PROXY =
+    "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(SOURCE);
+
+  return simpleFetchJson(PROXY);
+}
+
+/**
+ * Small helper that wraps fetch in a Promise and returns parsed JSON.
+ * If fetch does not exist, this will fail gracefully (see next step).
+ */
+function simpleFetchJson(url) {
+  if (!window.fetch) {
+    // very old browser – reject so we can see it in console
+    return Promise.reject(new Error("fetch is not available"));
+  }
+
+  return fetch(url, { cache: "no-store" })
+    .then(function (res) {
+      console.log(res);
+      if (!res.ok) {
+        throw new Error("HTTP " + res.status);
+      }
+      return res.json();
+    })
+    .then(function (data) {
+      console.log(data);
       return data;
-      // Example shape: { "amount": 24000, "prev_amount": 23000 }
-    //   document.getElementById("amount").textContent = fmt(data.amount);
-    } catch (err) {
+    })
+    .catch(function (err) {
       console.error(err);
-    //   document.getElementById("amount").textContent = "Unavailable";
-    }
-}
-
-async function loadlastfive() {
-    const SOURCE =
-      "https://musikhjalpen-franceska.herokuapp.com/server/fundraisers/donations/1miEB4p0tI1WQJgRWZEEb9/0";
-    const PROXY = "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(SOURCE); //rätt snabb
-
-    try {
-      const res = await fetch(PROXY, { cache: "no-store" });
-      console.log(res)
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json(); // upstream JSON is passed through
-      console.log(data)
-      // Example shape: { "amount": 24000, "prev_amount": 23000 }
-      const fmt = n =>
-        Number(n ?? 0).toLocaleString("sv-SE", {
-          style: "currency",
-          currency: "SEK",
-          maximumFractionDigits: 0,
-        });
-    return data;
-    //   document.getElementById("amount").textContent = fmt(data.amount);
-    } catch (err) {
-      console.error(err);
-    //   document.getElementById("amount").textContent = "Unavailable";
-    }
-}
-
-async function loadtotalprice() {
-    const SOURCE =
-      "https://musikhjalpen-franceska.herokuapp.com/server/fundraisers/1miEB4p0tI1WQJgRWZEEb9?fields[]=amount&fields[]=prev_amount";
-    const PROXY = "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(SOURCE); //rätt snabb
-
-    try {
-      const res = await fetch(PROXY, { cache: "no-store" });
-      console.log(res)
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json(); // upstream JSON is passed through
-      console.log(data)
-      // Example shape: { "amount": 24000, "prev_amount": 23000 }
-      const fmt = n =>
-        Number(n ?? 0).toLocaleString("sv-SE", {
-          style: "currency",
-          currency: "SEK",
-          maximumFractionDigits: 0,
-        });
-    return data;
-
-      document.getElementById("amount").textContent = fmt(data.amount);
-    } catch (err) {
-      console.error(err);
-      document.getElementById("amount").textContent = "Unavailable";
-    }
+      throw err;
+    });
 }
