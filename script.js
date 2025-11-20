@@ -30,6 +30,7 @@ function loadData() {
           donation.name +
           " gav " +
           donation.amount +
+          "kr " +
           "</p>";
         lastfiveContainer.appendChild(div);
       }
