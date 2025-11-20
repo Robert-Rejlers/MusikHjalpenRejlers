@@ -1,3 +1,5 @@
+//"PAQO07NxKKWLNmy3lyeyt"
+
 // Run when page has finished loading
 window.onload = function () {
   // console.log("load");
@@ -60,7 +62,7 @@ function loadData() {
 
       // shrink text until it fits
       while (text.scrollWidth > box.clientWidth && size > 0) {
-        console.log(size);
+        // console.log(size);
         size--;
         text.style.fontSize = size + "px";
         goal.style.fontSize = size + "px";
@@ -99,7 +101,8 @@ function loadTotalDonations() {
 
 function loadLastFive() {
   var SOURCE =
-    "https://musikhjalpen-franceska.herokuapp.com/server/fundraisers/donations/1miEB4p0tI1WQJgRWZEEb9/0";
+    // "https://musikhjalpen-franceska.herokuapp.com/server/fundraisers/donations/1miEB4p0tI1WQJgRWZEEb9/0";
+    "https://musikhjalpen-franceska.herokuapp.com/server/fundraisers/donations/PAQO07NxKKWLNmy3lyeyt/0";
   var PROXY =
     "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(SOURCE);
 
@@ -108,7 +111,8 @@ function loadLastFive() {
 
 function loadTotalPrice() {
   var SOURCE =
-    "https://musikhjalpen-franceska.herokuapp.com/server/fundraisers/1miEB4p0tI1WQJgRWZEEb9?fields[]=amount&fields[]=prev_amount";
+    // "https://musikhjalpen-franceska.herokuapp.com/server/fundraisers/1miEB4p0tI1WQJgRWZEEb9?fields[]=amount&fields[]=prev_amount";
+    "https://musikhjalpen-franceska.herokuapp.com/server/fundraisers/PAQO07NxKKWLNmy3lyeyt?fields%5B%5D=amount&fields=prev_amount";
   var PROXY =
     "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(SOURCE);
 

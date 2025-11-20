@@ -12,6 +12,7 @@
     /* COLORS */
     --darkBlue: #2B3A55;
     --green: #2AA784;
+    --offgreen: #7FCAB5;
     --pink: #F6B2BB;
     /* FONTS */
     --helvetica: "helvetica-now";
@@ -23,7 +24,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    background-color: #2AA784;
+    background-color: var(--offgreen);
     font-family: var(--helvetica);
 }
 
@@ -68,7 +69,6 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: end;
     height: 50%;
 }
 
@@ -90,7 +90,7 @@ body {
 }
 
 .QR {
-    background-image: url('images/Scanna\ QR-koden\ för\ att\ lämna\ ditt\ bidrag!1.png');
+    background-image: url('images/Scanna\ QR-koden\ för\ att\ lämna\ ditt\ bidrag!.png');
 }
 
 .MH {
@@ -100,6 +100,7 @@ body {
 .logo_qr {
     display: flex;
     height: 50%;
+    margin-top: 50px;
 }
 
 .img_container:first-child {
@@ -134,7 +135,8 @@ body {
 }
 
 .donation > *, .donation {
-    background-color: #2B3A55;
+    /* background-color: var(--darkBlue); */
+    background-color: black;
 }
 
 .donation_text {
@@ -166,13 +168,15 @@ body {
 }
 
 .goal {
-    color: var(--darkBlue);
+    /* color: var(--darkBlue); */
+    color: black;
     font-size: 40px;
 }
 
 .bar_edge {
     display: flex;
-    border: solid var(--darkBlue);
+    /* border: solid var(--darkBlue); */
+    border: solid black;
     width: 25%;
     flex-direction: column-reverse;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
@@ -181,7 +185,8 @@ body {
 
 .bar {
     /* background-color: #F6B2BB; */
-    background-color: var(--darkBlue);
+    /* background-color: var(--darkBlue); */
+    background-color: black;
     border-radius: 6px;
     /* height: 50%; */
 }
@@ -198,13 +203,15 @@ body {
 }
 
 .current_number {
-    color: var(--darkBlue);
+    /* color: var(--darkBlue); */
+    color: black;
     font-weight: bold;
     /* padding-right: 10px; */
 }
 
 #indicator {
-    border-top: solid var(--darkBlue);
+    /* border-top: solid var(--darkBlue); */
+    border-top: solid black;
 }
 
 progress {
