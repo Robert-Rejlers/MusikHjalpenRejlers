@@ -22,17 +22,19 @@ function loadData() {
 
     if (lastfive && lastfive.length && lastfiveContainer) {
       for (var i = 0; i < lastfive.length; i++) {
-        var donation = lastfive[i];
-        var div = document.createElement("div");
-        div.className = "donation";
-        div.innerHTML =
-          '<p class="donation_name donation_text">' +
-          donation.name +
-          " gav " +
-          donation.amount +
-          "kr " +
-          "</p>";
-        lastfiveContainer.appendChild(div);
+        if (lastfive[i].hidden_amount != true) {
+          var donation = lastfive[i];
+          var div = document.createElement("div");
+          div.className = "donation";
+          div.innerHTML =
+            '<p class="donation_name donation_text">' +
+            donation.name +
+            " gav " +
+            donation.amount +
+            "kr " +
+            "</p>";
+          lastfiveContainer.appendChild(div);
+        }
       }
     }
 
