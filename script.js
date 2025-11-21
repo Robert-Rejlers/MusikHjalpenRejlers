@@ -18,7 +18,7 @@ function loadData() {
     var lastfive = results[2];
 
     var lastfiveContainer = document.getElementsByClassName("last_five")[0];
-    // console.log(lastfive);
+    console.log(lastfive);
 
     if (lastfive && lastfive.length && lastfiveContainer) {
       for (var i = 0; i < lastfive.length; i++) {
@@ -26,9 +26,15 @@ function loadData() {
           var donation = lastfive[i];
           var div = document.createElement("div");
           div.className = "donation";
+          var donation_name
+          if(donation.name != "") {
+            donation_name = donation.name; 
+          } else {
+            donation_name = "En hemlig hjälte"
+          }
           div.innerHTML =
             '<p class="donation_name donation_text">' +
-            donation.name +
+            donation_name +
             " gav " +
             donation.amount +
             "kr " +
