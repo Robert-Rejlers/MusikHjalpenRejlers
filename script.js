@@ -1,95 +1,96 @@
-//"PAQO07NxKKWLNmy3lyeyt"
+//"PAQO07NxKKWLNmy3lyeyt" id för rejlers
 
-// Run when page has finished loading
 window.onload = function () {
   // console.log("load");
   loadData();
 };
 
 function loadData() {
-  // run the three requests in parallel
-  Promise.all([
-    loadTotalPrice(),
-    loadTotalDonations(),
-    loadLastFive()
-  ]).then(function (results) {
-    var totalprice = results[0];
-    var totaldonations = results[1]; // not used right now, but kept
-    var lastfive = results[2];
+  Promise.all([loadTotalPrice(), loadTotalDonations(), loadLastFive()])
+    .then(function (results) {
+      console.log(results);
+      var totalprice = results[0];
+      var totaldonations = results[1]; // används inte just nu
+      var lastfive = results[2];
 
-    var lastfiveContainer = document.getElementsByClassName("last_five")[0];
-    console.log(lastfive);
+      var lastfiveContainer = document.getElementsByClassName("last_five")[0];
+      console.log(lastfive);
 
-    if (lastfive && lastfive.length && lastfiveContainer) {
-      for (var i = 0; i < lastfive.length; i++) {
-        if (lastfive[i].hidden_amount != true) {
+      if (lastfive && lastfive.length && lastfiveContainer) {
+        for (var i = 0; i < lastfive.length; i++) {
           var donation = lastfive[i];
           var div = document.createElement("div");
           div.className = "donation";
-          var donation_name
-          if(donation.name != "") {
-            donation_name = donation.name; 
+          var donation_name;
+          if (lastfive[i].hidden_amount != true) {
+            if (donation.name != "") {
+              donation_name = donation.name;
+            } else {
+              donation_name = "En hemlig hjälte";
+            }
+            div.innerHTML =
+              '<p class="donation_name donation_text">' +
+              donation_name +
+              " gav " +
+              donation.amount +
+              "kr " +
+              "</p>";
+            lastfiveContainer.appendChild(div);
           } else {
-            donation_name = "En hemlig hjälte"
+            div.innerHTML =
+              '<p class="donation_name donation_text">' +
+              "En hemlig hjälte gav en donation" +
+              "</p>";
+            lastfiveContainer.appendChild(div);
           }
-          div.innerHTML =
-            '<p class="donation_name donation_text">' +
-            donation_name +
-            " gav " +
-            donation.amount +
-            "kr " +
-            "</p>";
-          lastfiveContainer.appendChild(div);
         }
       }
-    }
 
-    var percentage = (totalprice.amount / 200000) * 100;
-    // console.log(percentage);
+      var percentage = (totalprice.amount / 200000) * 100;
+      // console.log(percentage);
 
-    var bar = document.getElementById("bar");
-    var indicator = document.getElementById("indicator");
-    if (bar) bar.style.height = percentage + "%";
-    if (indicator) indicator.style.height = percentage + "%";
+      var bar = document.getElementById("bar");
+      var indicator = document.getElementById("indicator");
+      if (bar) bar.style.height = percentage + "%";
+      if (indicator) indicator.style.height = percentage + "%";
 
-    var formatted = formatSEK(totalprice.amount);
-    // console.log(formatted);
+      var formatted = formatSEK(totalprice.amount);
+      // console.log(formatted);
 
-    var amountEl = document.getElementById("amount");
-    if (amountEl) {
-      amountEl.innerText = formatted + "";
-    }
+      var amountEl = document.getElementById("amount");
+      if (amountEl) {
+        amountEl.innerText = formatted + "";
+      }
 
-    var box = document.getElementById("box");
-    var text = amountEl;
-    var goal = document.getElementById("goal");
+      var box = document.getElementById("box");
+      var text = amountEl;
+      var goal = document.getElementById("goal");
 
-    if (box && text && goal) {
-      var size = 100; // start big
-      text.style.fontSize = size + "px";
-      goal.style.fontSize = size + "px";
-
-      // shrink text until it fits
-      while (text.scrollWidth > box.clientWidth && size > 0) {
-        // console.log(size);
-        size--;
+      if (box && text && goal) {
+        var size = 100; // start big
         text.style.fontSize = size + "px";
         goal.style.fontSize = size + "px";
+
+        while (text.scrollWidth > box.clientWidth && size > 0) {
+          // console.log(size);
+          size--;
+          text.style.fontSize = size + "px";
+          goal.style.fontSize = size + "px";
+        }
       }
-    }
-  }).catch(function (err) {
-    console.error(err);
-  });
+    })
+    .catch(function (err) {
+      console.error(err);
+    });
 }
 
 function formatSEK(n) {
   n = Number(n || 0);
-  // Try proper currency formatting if available
   try {
     return n.toLocaleString("sv-SE", {
       style: "currency",
       currency: "SEK",
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     });
   } catch (e) {
     // Fallback for old browsers without Intl
